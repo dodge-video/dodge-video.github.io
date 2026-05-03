@@ -1,0 +1,33 @@
+# Licensing
+
+This repository, comprising the website dodge.video and the
+browser-based tools that are hosted on it, is **source-available** under
+non-commercial terms. All code is readable, modifiable, and redistributable,
+but commercial use is prohibited without explicit written permission.
+
+## Code
+
+All source code in this repository (`*.astro`, `*.ts`, `*.tsx`, `*.js`,
+`*.css`, `*.mjs`, build and CI scripts) is licensed under the
+**PolyForm Noncommercial License 1.0.0**.
+
+See [`LICENSE-CODE.md`](LICENSE-CODE.md).
+
+## Content
+
+All written content (text, prose, diagrams, written material under
+`src/content/` and any standalone copy on the rendered site) is licensed
+under the **Creative Commons Attribution-NonCommercial 4.0 International
+License (CC BY-NC 4.0)**.
+
+See [`LICENSE-CONTENT.md`](LICENSE-CONTENT.md).
+
+## Attribution
+
+The PolyForm license requires that the following notice be preserved
+verbatim in any redistribution of this software, in plain text:
+
+> Required Notice: Copyright 2026 Ethan Witwer (https://dodge.video)
+
+For attribution under CC BY-NC 4.0, please credit "the Dodge project,
+dodge.video" with a link to https://dodge.video.
