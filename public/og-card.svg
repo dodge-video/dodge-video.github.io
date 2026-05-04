@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <pattern id="grid" x="0" y="0" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#e7eaf0" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="#f6f7fa"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <text x="80" y="140"
+        font-family="Inter, -apple-system, system-ui, sans-serif"
+        font-size="22" font-weight="600" fill="#1f4cff"
+        letter-spacing="3">OPEN-SOURCE VIDEO FINGERPRINTING DEFENSE</text>
+
+  <text x="80" y="270"
+        font-family="Inter, -apple-system, system-ui, sans-serif"
+        font-size="80" font-weight="700" fill="#0c1117"
+        letter-spacing="-2">Encrypted video traffic</text>
+  <text x="80" y="370"
+        font-family="Inter, -apple-system, system-ui, sans-serif"
+        font-size="80" font-weight="700" fill="#0c1117"
+        letter-spacing="-2">still leaks <tspan fill="#1f4cff">what you're</tspan></text>
+  <text x="80" y="470"
+        font-family="Inter, -apple-system, system-ui, sans-serif"
+        font-size="80" font-weight="700" fill="#1f4cff"
+        letter-spacing="-2">watching.</text>
+
+  <g transform="translate(80, 540)">
+    <rect width="32" height="34" x="0"   y="6"  fill="#0c1117"/>
+    <rect width="32" height="48" x="40"  y="-8" fill="#0c1117"/>
+    <rect width="32" height="60" x="80"  y="-20" fill="#0c1117"/>
+    <rect width="32" height="42" x="120" y="0"  fill="#0c1117"/>
+    <rect width="32" height="64" x="160" y="-24" fill="#0c1117"/>
+    <rect width="32" height="72" x="200" y="-32" fill="#0c1117"/>
+    <rect width="32" height="50" x="240" y="-10" fill="#0c1117"/>
+    <rect width="32" height="22" x="280" y="18" fill="#0c1117"/>
+    <rect width="32" height="18" x="320" y="22" fill="#0c1117"/>
+    <rect width="32" height="34" x="360" y="6"  fill="#0c1117"/>
+    <rect width="32" height="56" x="400" y="-16" fill="#0c1117"/>
+    <rect width="32" height="68" x="440" y="-28" fill="#0c1117"/>
+    <rect width="32" height="44" x="480" y="-4"  fill="#0c1117"/>
+    <rect width="32" height="28" x="520" y="12" fill="#0c1117"/>
+    <rect width="32" height="22" x="560" y="18" fill="#0c1117"/>
+    <rect width="32" height="42" x="600" y="0"  fill="#0c1117"/>
+    <rect width="32" height="62" x="640" y="-22" fill="#0c1117"/>
+    <rect width="32" height="50" x="680" y="-10" fill="#0c1117"/>
+    <rect width="32" height="36" x="720" y="4"  fill="#0c1117"/>
+    <rect width="32" height="44" x="760" y="-4"  fill="#0c1117"/>
+    <rect width="32" height="58" x="800" y="-18" fill="#0c1117"/>
+  </g>
+
+  <g transform="translate(900, 80)">
+    <rect width="220" height="56" rx="8" fill="#ffffff" stroke="#d8dde5" stroke-width="1"/>
+    <text x="22" y="36"
+          font-family="JetBrains Mono, monospace"
+          font-size="22" font-weight="700" fill="#0c1117"
+          letter-spacing="-0.5">dodge<tspan fill="#1f4cff">/</tspan>video</text>
+  </g>
+</svg>
