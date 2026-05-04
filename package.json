@@ -14,6 +14,7 @@
     "astro": "ASTRO_TELEMETRY_DISABLED=1 astro"
   },
   "dependencies": {
+    "@astrojs/rss": "^4.0.18",
     "astro": "^6.2.1"
   }
 }
