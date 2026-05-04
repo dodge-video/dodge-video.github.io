@@ -1,0 +1,29 @@
+---
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+// Required Notice: Copyright 2026 Ethan Witwer (https://dodge.video)
+
+import PageLayout from '../layouts/PageLayout.astro';
+import { SITE } from '../consts.ts';
+---
+<PageLayout
+  kicker="CONTRIBUTE"
+  title="How to help"
+  description="Bug reports, new defenses, deployment feedback, code contributions, and ideas are all welcome."
+>
+  <h2>Where the code is</h2>
+  <p>The GitHub organization <a href={SITE.github}>dodge-video</a> holds the dash.js module, the browser extension, the defense generator, and related tooling. Each repo links to the others.</p>
+
+  <h2>What we need most</h2>
+  <ul>
+    <li><strong>Real-world deployment feedback.</strong> If you operate a streaming service and you're considering a defense, get in touch — we want to learn what breaks before attackers do.</li>
+    <li><strong>Defense development and testing.</strong> The framework just provides building blocks; the actual defenses are the substance. Defenses against specific attacker models are the most valuable contribution.</li>
+  </ul>
+
+  <h2>Discussion and feedback</h2>
+  <p>For anything related to the dash.js module and its development in particular, we refer to the <a href={SITE.dashjsGroup}>dash.js Google Group</a>.</p>
+  <p>For issues and pull requests related to the other Dodge tools, see the appropriate GitHub repository.</p>
+
+  <h2>License posture</h2>
+  <p>The dash.js module is licensed under the BSD 3-Clause license by the DASH Industry Forum and may be used for commercial purposes. The other Dodge tools are licensed under <a href="https://polyformproject.org/licenses/noncommercial/1.0.0/">PolyForm Noncommercial 1.0.0</a>, which forbids commercial use of derivative works. Contributors agree to the license terms when submitting.</p>
+  <p>If you're a content provider who wants to use Dodge tools (beyond the dash.js module) in a commercial deployment, get in touch to obtain permission.</p>
+</PageLayout>

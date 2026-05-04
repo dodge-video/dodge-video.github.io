@@ -1,0 +1,94 @@
+---
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+// Required Notice: Copyright 2026 Ethan Witwer (https://dodge.video)
+
+import PageLayout from '../../layouts/PageLayout.astro';
+import { SITE } from '../../consts.ts';
+
+const tools = [
+  {
+    href: SITE.dashjsHome,
+    name: 'dash.js module',
+    blurb: 'The Dodge framework is an opt-in module in dash.js. Ship defended catalogs without forking the player.',
+    audience: 'integrators (content providers, developers)',
+  },
+  {
+    href: '/tools/extension',
+    name: 'Browser extension',
+    blurb: 'Swap undefended players for Dodge on supported sites, apply ready-made defenses, and verify them.',
+    audience: 'viewers and content consumers',
+  },
+  {
+    href: '/tools/generator',
+    name: 'Defense generator',
+    blurb: 'Create an extended manifest from a DASH MPD. Designed to run offline in your browser.',
+    audience: 'defense designers, researchers',
+  },
+  {
+    href: '/spec/extended-manifest',
+    name: 'Extended manifest format',
+    blurb: 'The extended manifest format reference. Read this before writing code that works with Dodge defenses.',
+    audience: 'tool authors, integrators',
+  },
+];
+---
+<PageLayout
+  kicker="TOOLS"
+  title="The Dodge toolkit"
+  description="Three components and a format spec. Pick the entry point that matches what you're trying to do."
+>
+  <div class="grid">
+    {tools.map((t) => (
+      <a class="tool" href={t.href}>
+        <div class="name">{t.name}</div>
+        <div class="blurb">{t.blurb}</div>
+        <div class="audience mono">for: {t.audience}</div>
+      </a>
+    ))}
+  </div>
+</PageLayout>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .tool {
+    display: block;
+    padding: 22px 24px;
+    background: #fafbfc;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line) !important;
+  }
+  .tool:hover {
+    border-color: var(--accent);
+  }
+  .name {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: -0.005em;
+  }
+  .blurb {
+    color: var(--muted);
+    margin-bottom: 6px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .audience {
+    font-size: 11px;
+    color: var(--accent);
+    margin-bottom: 22px;
+    letter-spacing: 0.04em;
+  }
+  @media (max-width: 800px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

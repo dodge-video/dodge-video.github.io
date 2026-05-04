@@ -1,0 +1,36 @@
+---
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+// Required Notice: Copyright 2026 Ethan Witwer (https://dodge.video)
+
+import PageLayout from '../../layouts/PageLayout.astro';
+---
+<PageLayout
+  kicker="LEARN"
+  title="How video fingerprinting works"
+  description="A deeper look at why encrypted video traffic still leaks what you're watching."
+>
+  <h2>The shape of a video</h2>
+  <p>Modern video streaming uses <a href="https://en.wikipedia.org/wiki/Dynamic_Adaptive_Streaming_over_HTTP">DASH</a> (Dynamic Adaptive Streaming over HTTP). Videos are split into many short <em>segments</em>, each a few seconds long, and your browser fetches them one at a time as you watch.</p>
+  <p>Two facts about those segments make fingerprinting possible:</p>
+  <ul>
+    <li>Every segment in a given representation has the same <em>duration</em>.</li>
+    <li>Their <em>sizes</em> vary and are correlated with context complexity.</li>
+  </ul>
+  <p>At a high level, then, the byte counts that are sent over the network are essentially a time series of the video's visual complexity. Different videos have different complexity profiles, and that's enough to tell them apart.</p>
+
+  <h2>Why encryption doesn't fix this</h2>
+  <p>HTTPS encrypts the bytes inside each segment — the actual video data — but it does not hide the size of the encrypted data. An observer can still see "the browser fetched a 412 KB segment, then a 380 KB segment, then a 95 KB segment...". The pattern of sizes is the fingerprint, and the bytes themselves don't need to be readable.</p>
+  <p>VPNs and Tor don't change the underlying signal: an encrypted, anonymized tunnel still carries the segment sequence at a granularity that attackers can use.</p>
+
+  <h2>What it takes to identify a video</h2>
+  <p>An attacker needs three things:</p>
+  <ol>
+    <li>Access to the network between you and the video server to see your segment requests.</li>
+    <li>A known catalog of fingerprints, which they can build by watching the same content themselves.</li>
+    <li>A classifier that maps "observed segment size sequence" to "best matching catalog entry".</li>
+  </ol>
+  <p>This is well established in the academic literature, including the <a href="/about">paper</a> behind Dodge.</p>
+
+  <h2>What Dodge changes</h2>
+  <p>A Dodge defense rewrites which segments your browser fetches, and at which sizes. The video you see on screen is the same, but the byte sequence on the wire is different. With a well-designed defense, the wire pattern doesn't match any specific catalog entry.</p>
+</PageLayout>

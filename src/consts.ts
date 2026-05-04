@@ -17,4 +17,6 @@ export const SITE = {
   componentList: ['dash.js module', 'browser extension', 'defense generator'],
   github: 'https://github.com/dodge-video',
   paperUrl: 'https://www.ethanwitwer.com/assets/pdf/2026-dodge.pdf',
+  dashjsHome: 'https://dashjs.org',
+  dashjsGroup: 'https://groups.google.com/g/dashjs',
 } as const;
