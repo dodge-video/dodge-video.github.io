@@ -1,0 +1,61 @@
+---
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+// Required Notice: Copyright 2026 Ethan Witwer (https://dodge.video)
+
+import MetaStrip from './MetaStrip.astro';
+---
+<header class="headline">
+  <div class="tag mono">// open-source video fingerprinting defense</div>
+  <h1>Encrypted video traffic still leaks <span class="accent">what you're watching</span>.</h1>
+  <p class="lead">
+    Dodge reshapes the chunk-by-chunk download pattern of streaming video so that observers — coffee shop neighbors, network admins, ISPs — can't see an identifying fingerprint. To give you a high-quality, private viewing experience.
+  </p>
+  <MetaStrip />
+</header>
+
+<style>
+  .headline {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 56px 56px 44px;
+    margin-top: 24px;
+    position: relative;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+  }
+  h1 {
+    font-size: 46px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 18px;
+    font-weight: 700;
+    max-width: 22ch;
+  }
+  h1 .accent {
+    color: var(--accent);
+  }
+  .lead {
+    font-size: 16.5px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0;
+    max-width: 64ch;
+  }
+  @media (max-width: 800px) {
+    .headline {
+      padding: 36px 28px;
+    }
+    h1 {
+      font-size: 34px;
+    }
+  }
+</style>

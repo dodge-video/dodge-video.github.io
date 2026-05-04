@@ -1,0 +1,54 @@
+---
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+// Required Notice: Copyright 2026 Ethan Witwer (https://dodge.video)
+
+import { SITE } from '../consts.ts';
+const year = new Date().getFullYear();
+// dash.js Google Group is the discussion forum for the time being;
+// the Dodge project does not yet have a separate mailing list.
+const dashjsGroup = 'https://groups.google.com/g/dashjs';
+---
+<footer>
+  <div>© {year} Ethan Witwer · this website's content is licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a></div>
+  <div class="links">
+    <a href={SITE.github}>github</a>
+    <a href={SITE.paperUrl}>original paper</a>
+    <a href={dashjsGroup}>discuss (dash.js group)</a>
+  </div>
+</footer>
+
+<style>
+  footer {
+    margin-top: 28px;
+    padding: 22px 0;
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  footer > div:first-child a {
+    color: var(--muted);
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-underline-offset: 2px;
+  }
+  footer > div:first-child a:hover {
+    color: var(--accent);
+    text-decoration-color: var(--accent);
+  }
+  .links a {
+    color: var(--muted);
+    text-decoration: none;
+    margin-left: 16px;
+  }
+  .links a:first-child {
+    margin-left: 0;
+  }
+  .links a:hover {
+    color: var(--accent);
+  }
+</style>

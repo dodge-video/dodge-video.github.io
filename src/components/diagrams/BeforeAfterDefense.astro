@@ -1,0 +1,113 @@
+---
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+// Required Notice: Copyright 2026 Ethan Witwer (https://dodge.video)
+
+// fig 03 - real vs. shaped, plus player -> observer (blocked) -> server flow.
+const shapedBars = Array.from({ length: 20 }).map((_, i) => ({
+  x: i * 12,
+  y: i % 2 === 0 ? 2 : 0,
+  height: i % 2 === 0 ? 26 : 28,
+}));
+---
+<figure class="visual-frame">
+  <div class="vlabel mono">
+    <span>fig 03 · before / after</span><span>shape ≠ identity</span>
+  </div>
+  <svg
+    viewBox="0 0 640 240"
+    width="100%"
+    height="auto"
+    role="img"
+    aria-label="A diagram showing two rows of bars: 'in: real' is the original variable-size sequence, 'out: shaped' is a uniform sequence after Dodge applies. Below, a player icon connects to a video server icon; an observer eye between them is crossed out by an accent-blue line."
+  >
+    <text class="lbl-strong" x="10" y="22">in: real</text>
+    <g transform="translate(110,4)">
+      <rect class="seg" x="0" y="6" width="14" height="22" />
+      <rect class="seg" x="16" y="0" width="14" height="28" />
+      <rect class="seg" x="32" y="14" width="14" height="14" />
+      <rect class="seg" x="48" y="4" width="14" height="24" />
+      <rect class="seg" x="64" y="10" width="14" height="18" />
+      <rect class="seg" x="80" y="2" width="14" height="26" />
+      <rect class="seg" x="96" y="16" width="14" height="12" />
+      <rect class="seg" x="112" y="8" width="14" height="20" />
+      <rect class="seg" x="128" y="4" width="14" height="24" />
+      <rect class="seg" x="144" y="0" width="14" height="28" />
+      <rect class="seg" x="160" y="14" width="14" height="14" />
+      <rect class="seg" x="176" y="6" width="14" height="22" />
+    </g>
+    <text class="lbl mono" x="320" y="22">→ apply defense →</text>
+    <text class="lbl-strong" x="10" y="68">out: shaped</text>
+    <g transform="translate(110,50)">
+      {shapedBars.map((b) => (
+        <rect class="seg-rand" x={b.x} y={b.y} width="10" height={b.height} />
+      ))}
+    </g>
+
+    <g transform="translate(40,128)">
+      <rect x="0" y="0" width="80" height="50" fill="none" stroke="var(--line)" stroke-width="1.2" rx="4" />
+      <polygon points="28,14 28,36 50,25" fill="var(--ink)" />
+      <text class="lbl-strong" x="20" y="74">player</text>
+    </g>
+    <line class="axis" x1="120" y1="153" x2="260" y2="153" stroke-dasharray="3 3" />
+    <text class="lbl mono" x="160" y="143">tcp / tls</text>
+    <g transform="translate(260,128)">
+      <ellipse cx="40" cy="25" rx="40" ry="18" fill="none" stroke="var(--line)" stroke-width="1.2" />
+      <circle cx="40" cy="25" r="6" fill="var(--ink)" />
+      <line class="crossed" x1="6" y1="6" x2="74" y2="44" />
+      <text class="lbl-strong" x="-12" y="74">network observer</text>
+    </g>
+    <line class="axis" x1="340" y1="153" x2="460" y2="153" stroke-dasharray="3 3" />
+    <g transform="translate(460,128)">
+      <rect x="0" y="0" width="80" height="50" fill="none" stroke="var(--line)" stroke-width="1.2" rx="4" />
+      <line class="axis" x1="10" y1="14" x2="70" y2="14" />
+      <line class="axis" x1="10" y1="22" x2="70" y2="22" />
+      <line class="axis" x1="10" y1="30" x2="70" y2="30" />
+      <line class="axis" x1="10" y1="38" x2="70" y2="38" />
+      <text class="lbl-strong" x="0" y="74">video server</text>
+    </g>
+  </svg>
+</figure>
+
+<style>
+  .visual-frame {
+    background: #fafbfc;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 18px;
+    margin: 8px 0 0;
+  }
+  .vlabel {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .seg {
+    fill: var(--seg-fill);
+  }
+  .seg-rand {
+    fill: var(--rand-fill);
+  }
+  .axis {
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+  .lbl {
+    font:
+      10.5px 'JetBrains Mono',
+      monospace;
+    fill: var(--muted);
+  }
+  .lbl-strong {
+    font:
+      11px 'JetBrains Mono',
+      monospace;
+    fill: var(--ink);
+    font-weight: 600;
+  }
+  .crossed {
+    stroke: var(--accent);
+    stroke-width: 2.5;
+  }
+</style>

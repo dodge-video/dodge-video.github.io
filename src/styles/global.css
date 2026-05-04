@@ -1,0 +1,73 @@
+/*!
+ * SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+ * Required Notice: Copyright 2026 Ethan Witwer (https://dodge.video)
+ */
+
+:root {
+  --bg: #f6f7fa;
+  --grid: #e7eaf0;
+  --panel: #ffffff;
+  --ink: #0c1117;
+  --muted: #545b66;
+  --line: #d8dde5;
+  --line-soft: #ebeef3;
+  --accent: #1f4cff;
+  --accent-soft: #e6ecff;
+  --code-bg: #eef0f4;
+  --seg-fill: #0c1117;
+  --rand-fill: #1f4cff;
+  --pad-fill: #9ba6b5;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font:
+    15px/1.55 'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  color: var(--ink);
+  background:
+    linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 100% 24px,
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 24px 100%,
+    var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.mono {
+  font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+}
+
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 28px 96px;
+}
+
+a {
+  color: inherit;
+}

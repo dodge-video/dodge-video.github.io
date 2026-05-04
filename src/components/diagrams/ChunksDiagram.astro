@@ -1,0 +1,98 @@
+---
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+// Required Notice: Copyright 2026 Ethan Witwer (https://dodge.video)
+
+// fig 01 - segment size over time. Bar chart with action/still annotations.
+// Pure SVG, no JS. aria-label gives a textual description for assistive tech.
+---
+<figure class="visual-frame">
+  <div class="vlabel mono">
+    <span>fig 01 · segment size over time</span><span>units: KB</span>
+  </div>
+  <svg
+    viewBox="0 0 640 200"
+    width="100%"
+    height="auto"
+    role="img"
+    aria-label="A bar chart showing video segment sizes over time. Action scenes produce taller bars (larger segments); still scenes produce shorter bars."
+  >
+    <line class="gridline" x1="40" y1="40" x2="620" y2="40" />
+    <line class="gridline" x1="40" y1="80" x2="620" y2="80" />
+    <line class="gridline" x1="40" y1="120" x2="620" y2="120" />
+    <line class="axis" x1="40" y1="170" x2="620" y2="170" />
+    <line class="axis" x1="40" y1="20" x2="40" y2="170" />
+    <text class="lbl" x="6" y="44">900</text>
+    <text class="lbl" x="6" y="84">600</text>
+    <text class="lbl" x="6" y="124">300</text>
+    <text class="lbl" x="6" y="174">0</text>
+    <text class="lbl" x="600" y="190">t →</text>
+
+    <rect class="seg" x="60" y="120" width="22" height="50" />
+    <rect class="seg" x="86" y="80" width="22" height="90" />
+    <rect class="seg" x="112" y="60" width="22" height="110" />
+    <rect class="seg" x="138" y="100" width="22" height="70" />
+    <rect class="seg" x="164" y="50" width="22" height="120" />
+    <rect class="seg" x="190" y="40" width="22" height="130" />
+    <rect class="seg" x="216" y="90" width="22" height="80" />
+    <rect class="seg" x="242" y="135" width="22" height="35" />
+    <rect class="seg" x="268" y="140" width="22" height="30" />
+    <rect class="seg" x="294" y="115" width="22" height="55" />
+    <rect class="seg" x="320" y="70" width="22" height="100" />
+    <rect class="seg" x="346" y="55" width="22" height="115" />
+    <rect class="seg" x="372" y="100" width="22" height="70" />
+    <rect class="seg" x="398" y="125" width="22" height="45" />
+    <rect class="seg" x="424" y="140" width="22" height="30" />
+    <rect class="seg" x="450" y="100" width="22" height="70" />
+    <rect class="seg" x="476" y="65" width="22" height="105" />
+    <rect class="seg" x="502" y="80" width="22" height="90" />
+    <rect class="seg" x="528" y="120" width="22" height="50" />
+    <rect class="seg" x="554" y="100" width="22" height="70" />
+    <rect class="seg" x="580" y="60" width="22" height="110" />
+
+    <text class="lbl-strong" x="100" y="32">action</text>
+    <text class="lbl-strong" x="240" y="32">still</text>
+    <text class="lbl-strong" x="490" y="32">action</text>
+  </svg>
+</figure>
+
+<style>
+  .visual-frame {
+    background: #fafbfc;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 18px;
+    margin: 8px 0 0;
+  }
+  .vlabel {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .seg {
+    fill: var(--seg-fill);
+  }
+  .axis {
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+  .gridline {
+    stroke: var(--grid);
+    stroke-width: 1;
+    stroke-dasharray: 2 3;
+  }
+  .lbl {
+    font:
+      10.5px 'JetBrains Mono',
+      monospace;
+    fill: var(--muted);
+  }
+  .lbl-strong {
+    font:
+      11px 'JetBrains Mono',
+      monospace;
+    fill: var(--ink);
+    font-weight: 600;
+  }
+</style>

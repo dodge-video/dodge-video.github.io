@@ -1,0 +1,29 @@
+---
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+// Required Notice: Copyright 2026 Ethan Witwer (https://dodge.video)
+
+import { SITE } from '../../consts.ts';
+const componentsLine = `${SITE.componentList.join(' · ')}`;
+---
+<div class="meta">
+  <div><strong>v{SITE.version}</strong> · {SITE.versionDate}</div>
+  <div><strong>{SITE.componentCount} components</strong> · {componentsLine}</div>
+</div>
+
+<style>
+  .meta {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--line);
+    display: flex;
+    gap: 32px;
+    font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    font-size: 12px;
+    color: var(--muted);
+    flex-wrap: wrap;
+  }
+  .meta strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+</style>

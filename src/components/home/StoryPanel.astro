@@ -1,0 +1,102 @@
+---
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+// Required Notice: Copyright 2026 Ethan Witwer (https://dodge.video)
+
+import StoryStep from './StoryStep.astro';
+import StepConnector from './StepConnector.astro';
+import ChunksDiagram from '../diagrams/ChunksDiagram.astro';
+import FingerprintTrio from '../diagrams/FingerprintTrio.astro';
+import BeforeAfterDefense from '../diagrams/BeforeAfterDefense.astro';
+---
+<section class="story-panel">
+  <div class="panel-head">
+    <div class="label mono">// how the attack works, and what we do about it</div>
+    <div class="progress mono" aria-hidden="true">
+      <span class="dot on"></span><span class="bar"></span>
+      <span class="dot on"></span><span class="bar"></span>
+      <span class="dot on"></span>
+    </div>
+  </div>
+
+  <StoryStep
+    step="01 / OBSERVATION"
+    heading="Videos arrive in chunks."
+    metaBlurb="Constant duration, variable size. The size depends on the visual complexity of the content."
+  >
+    <p>When you watch online video, your browser doesn't download the file all at once. It fetches a stream of <em>segments</em> — small pieces a few seconds long.</p>
+    <p>Every segment has the same duration, but not the same size. For example, action scenes are large, and still scenes are small.</p>
+    <ChunksDiagram />
+  </StoryStep>
+
+  <StepConnector />
+
+  <StoryStep
+    step="02 / IDENTIFICATION"
+    heading="That pattern is a fingerprint."
+    metaBlurb="Encryption (HTTPS) hides what's inside segments, but not how big they are. VPNs and Tor don't change this."
+  >
+    <p>Different videos produce different sequences of sizes, and these differences are significant enough to identify a specific title from a known catalog.</p>
+    <p>Anyone watching your network — a coffee shop neighbor, a campus admin, your ISP — can use videos' patterns to identify what you're watching.</p>
+    <FingerprintTrio />
+  </StoryStep>
+
+  <StepConnector />
+
+  <StoryStep
+    step="03 / DEFENSE"
+    heading="Dodge rewrites the trail."
+    metaBlurb="Reshape the sequence (change download sizes, add fake chunks) until it no longer matches a specific title."
+  >
+    <p>A Dodge defense reshapes the download sequence so the visible traffic no longer identifies a specific title. This can be done in many different ways, and with different goals and viewing experience trade-offs.</p>
+    <p>Want to watch videos that haven't been published alongside a defense, or verify that your content provider has set up Dodge correctly? Download the browser extension to swap out undefended players and start defending.</p>
+    <BeforeAfterDefense />
+  </StoryStep>
+</section>
+
+<style>
+  .story-panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    margin-top: 16px;
+    overflow: hidden;
+  }
+  .panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, #fbfcfd 0%, #ffffff 100%);
+  }
+  .label {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .progress {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+  .progress .dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--line);
+    margin: 0 4px;
+  }
+  .progress .dot.on {
+    background: var(--accent);
+  }
+  .progress .bar {
+    display: inline-block;
+    width: 14px;
+    height: 1px;
+    background: var(--line);
+    vertical-align: middle;
+    margin: 0 2px;
+  }
+</style>

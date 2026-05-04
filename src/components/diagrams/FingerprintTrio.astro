@@ -1,0 +1,112 @@
+---
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+// Required Notice: Copyright 2026 Ethan Witwer (https://dodge.video)
+
+// fig 02 - three titles, distinct fingerprints. Each title is a row of bars.
+---
+<figure class="visual-frame">
+  <div class="vlabel mono">
+    <span>fig 02 · three titles · same network observer</span>
+    <span>distinct identities</span>
+  </div>
+  <svg
+    viewBox="0 0 640 220"
+    width="100%"
+    height="auto"
+    role="img"
+    aria-label="Three rows of bar charts labeled title_A, title_B, title_C. Each row has a distinct sequence of segment sizes, illustrating that different videos produce identifiable fingerprints. The rows also have different lengths."
+  >
+    <text class="lbl-strong" x="10" y="28">title_A</text>
+    <g transform="translate(110,10)">
+      <rect class="seg" x="0" y="6" width="14" height="22" />
+      <rect class="seg" x="16" y="0" width="14" height="28" />
+      <rect class="seg" x="32" y="14" width="14" height="14" />
+      <rect class="seg" x="48" y="4" width="14" height="24" />
+      <rect class="seg" x="64" y="10" width="14" height="18" />
+      <rect class="seg" x="80" y="2" width="14" height="26" />
+      <rect class="seg" x="96" y="16" width="14" height="12" />
+      <rect class="seg" x="112" y="8" width="14" height="20" />
+      <rect class="seg" x="128" y="4" width="14" height="24" />
+      <rect class="seg" x="144" y="0" width="14" height="28" />
+      <rect class="seg" x="160" y="14" width="14" height="14" />
+      <rect class="seg" x="176" y="6" width="14" height="22" />
+      <rect class="seg" x="192" y="2" width="14" height="26" />
+      <rect class="seg" x="208" y="10" width="14" height="18" />
+      <rect class="seg" x="224" y="6" width="14" height="22" />
+      <rect class="seg" x="240" y="14" width="14" height="14" />
+      <rect class="seg" x="256" y="4" width="14" height="24" />
+      <rect class="seg" x="272" y="2" width="14" height="26" />
+      <rect class="seg" x="288" y="10" width="14" height="18" />
+      <rect class="seg" x="304" y="6" width="14" height="22" />
+    </g>
+    <text class="lbl-strong" x="10" y="98">title_B</text>
+    <g transform="translate(110,80)">
+      <rect class="seg" x="0" y="0" width="14" height="28" />
+      <rect class="seg" x="16" y="14" width="14" height="14" />
+      <rect class="seg" x="32" y="6" width="14" height="22" />
+      <rect class="seg" x="48" y="18" width="14" height="10" />
+      <rect class="seg" x="64" y="2" width="14" height="26" />
+      <rect class="seg" x="80" y="22" width="14" height="6" />
+      <rect class="seg" x="96" y="0" width="14" height="28" />
+      <rect class="seg" x="112" y="16" width="14" height="12" />
+      <rect class="seg" x="128" y="6" width="14" height="22" />
+      <rect class="seg" x="144" y="20" width="14" height="8" />
+      <rect class="seg" x="160" y="0" width="14" height="28" />
+      <rect class="seg" x="176" y="14" width="14" height="14" />
+      <rect class="seg" x="192" y="22" width="14" height="6" />
+    </g>
+    <text class="lbl-strong" x="10" y="168">title_C</text>
+    <g transform="translate(110,150)">
+      <rect class="seg" x="0" y="10" width="14" height="18" />
+      <rect class="seg" x="16" y="6" width="14" height="22" />
+      <rect class="seg" x="32" y="2" width="14" height="26" />
+      <rect class="seg" x="48" y="0" width="14" height="28" />
+      <rect class="seg" x="64" y="6" width="14" height="22" />
+      <rect class="seg" x="80" y="12" width="14" height="16" />
+      <rect class="seg" x="96" y="14" width="14" height="14" />
+      <rect class="seg" x="112" y="8" width="14" height="20" />
+      <rect class="seg" x="128" y="2" width="14" height="26" />
+      <rect class="seg" x="144" y="6" width="14" height="22" />
+      <rect class="seg" x="160" y="14" width="14" height="14" />
+      <rect class="seg" x="176" y="18" width="14" height="10" />
+      <rect class="seg" x="192" y="22" width="14" height="6" />
+      <rect class="seg" x="208" y="6" width="14" height="22" />
+      <rect class="seg" x="224" y="10" width="14" height="18" />
+      <rect class="seg" x="240" y="2" width="14" height="26" />
+    </g>
+    <text class="lbl" x="10" y="208">→ encryption hides bytes; size and timing remain visible</text>
+  </svg>
+</figure>
+
+<style>
+  .visual-frame {
+    background: #fafbfc;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 18px;
+    margin: 8px 0 0;
+  }
+  .vlabel {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .seg {
+    fill: var(--seg-fill);
+  }
+  .lbl {
+    font:
+      10.5px 'JetBrains Mono',
+      monospace;
+    fill: var(--muted);
+  }
+  .lbl-strong {
+    font:
+      11px 'JetBrains Mono',
+      monospace;
+    fill: var(--ink);
+    font-weight: 600;
+  }
+</style>

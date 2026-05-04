@@ -1,0 +1,85 @@
+---
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+// Required Notice: Copyright 2026 Ethan Witwer (https://dodge.video)
+---
+<section class="cta">
+  <div class="card viewer">
+    <div class="step mono">// for viewers</div>
+    <h3>Watch privately.</h3>
+    <p>Install the browser extension to swap out undefended players for Dodge, apply ready-made defenses, and verify them.</p>
+    <a href="/install">Install →</a>
+  </div>
+  <div class="card builder">
+    <div class="step mono">// for builders</div>
+    <h3>Defend your video catalog.</h3>
+    <p>Use the dash.js module, generate defenses using our tools or your own tools that follow the extended manifest spec.</p>
+    <a href="/tools">Tools and spec →</a>
+  </div>
+</section>
+
+<style>
+  .cta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    margin-top: 24px;
+  }
+  .card {
+    padding: 32px 36px;
+  }
+  .card + .card {
+    border-left: 1px solid var(--line);
+  }
+  .step {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+  }
+  p {
+    margin: 0 0 16px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 10px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  a:hover {
+    background: var(--accent);
+  }
+  .builder a {
+    background: var(--panel);
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .builder a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  @media (max-width: 800px) {
+    .cta {
+      grid-template-columns: 1fr;
+    }
+    .card + .card {
+      border-left: 0;
+      border-top: 1px solid var(--line);
+    }
+  }
+</style>

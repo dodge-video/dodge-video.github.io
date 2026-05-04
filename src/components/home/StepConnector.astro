@@ -1,0 +1,36 @@
+---
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+// Required Notice: Copyright 2026 Ethan Witwer (https://dodge.video)
+
+// Tiny ↓ arrow centered on the dashed divider between steps.
+// Positioned at the same x as the spine (left: 22px in meta-col).
+---
+<div class="step-connector" aria-hidden="true"></div>
+
+<style>
+  .step-connector {
+    position: relative;
+    height: 0;
+    border-top: 1px dashed var(--line);
+  }
+  .step-connector::before {
+    content: '↓';
+    position: absolute;
+    left: 22px;
+    transform: translate(-50%, -50%);
+    top: 0;
+    background: var(--panel);
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1;
+    padding: 4px 0;
+    width: 18px;
+    text-align: center;
+  }
+  @media (max-width: 800px) {
+    .step-connector::before {
+      display: none;
+    }
+  }
+</style>

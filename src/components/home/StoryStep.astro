@@ -1,0 +1,115 @@
+---
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+// Required Notice: Copyright 2026 Ethan Witwer (https://dodge.video)
+
+interface Props {
+  step: string; // e.g. "01 / OBSERVATION"
+  heading: string; // e.g. "Videos arrive in chunks."
+  metaBlurb: string; // 1-2 sentences in the meta column
+}
+
+const { step, heading, metaBlurb } = Astro.props;
+---
+<div class="story-step">
+  <div class="meta-col">
+    <span class="marker"></span>
+    <div class="step mono">{step}</div>
+    <h2>{heading}</h2>
+    <p>{metaBlurb}</p>
+  </div>
+  <div class="body-col">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .story-step {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 0;
+    position: relative;
+  }
+  .meta-col {
+    background: #fafbfc;
+    border-right: 1px solid var(--line);
+    /* Left padding (44px) leaves a ~20px breathing strip between the
+       blue spine (at x=22-24) and the heading text. */
+    padding: 28px 24px 32px 38px;
+    position: relative;
+  }
+  /* Vertical spine: continuous because each step's pseudo-element extends -1
+     past the dashed divider, butting up against the next step's spine. */
+  .meta-col::before {
+    content: '';
+    position: absolute;
+    left: 22px;
+    top: -1px;
+    bottom: -1px;
+    width: 2px;
+    background: var(--accent);
+    opacity: 0.12;
+  }
+  .marker {
+    position: absolute;
+    left: 17px;
+    top: 28px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--panel);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .step {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 8px;
+    padding-left: 4px;
+  }
+  h2 {
+    font-size: 22px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin: 0 0 12px;
+    font-weight: 700;
+  }
+  p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .body-col {
+    padding: 28px 32px;
+  }
+  .body-col :global(p) {
+    margin: 0 0 12px;
+    max-width: 60ch;
+  }
+  .body-col :global(p):last-of-type {
+    margin-bottom: 18px;
+  }
+  .body-col :global(em) {
+    font-style: normal;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  @media (max-width: 800px) {
+    .story-step {
+      grid-template-columns: 1fr;
+    }
+    .meta-col {
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+      padding: 24px 20px;
+    }
+    .meta-col::before,
+    .marker {
+      display: none;
+    }
+    .body-col {
+      padding: 24px 20px;
+    }
+  }
+</style>

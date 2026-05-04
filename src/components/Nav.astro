@@ -1,0 +1,62 @@
+---
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+// Required Notice: Copyright 2026 Ethan Witwer (https://dodge.video)
+
+const links = [
+  { href: '/learn/fingerprinting', label: 'learn' },
+  { href: '/install', label: 'install' },
+  { href: '/tools', label: 'tools' },
+  { href: '/spec/extended-manifest', label: 'spec' },
+  { href: '/news', label: 'news' },
+  { href: '/about', label: 'about' },
+];
+---
+<nav class="top">
+  <a href="/" class="brand">dodge<span class="dot">/</span>video</a>
+  <div class="links">
+    {links.map((l) => <a href={l.href}>{l.label}</a>)}
+  </div>
+</nav>
+
+<style>
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    padding: 14px 22px;
+    margin-top: 28px;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .brand {
+    font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    font-size: 14px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .brand .dot {
+    color: var(--accent);
+  }
+  .links {
+    display: flex;
+    gap: 22px;
+  }
+  .links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .links a:hover {
+    color: var(--accent);
+  }
+  @media (max-width: 600px) {
+    .links {
+      gap: 14px;
+      font-size: 12px;
+    }
+  }
+</style>
