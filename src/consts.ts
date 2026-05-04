@@ -18,5 +18,7 @@ export const SITE = {
   github: 'https://github.com/dodge-video',
   paperUrl: 'https://www.ethanwitwer.com/assets/pdf/2026-dodge.pdf',
   dashjsHome: 'https://dashjs.org',
+  dashjsRepo: 'https://github.com/Dash-Industry-Forum/dash.js',
   dashjsGroup: 'https://groups.google.com/g/dashjs',
+  contactEmail: 'contact@dodge.video',
 } as const;

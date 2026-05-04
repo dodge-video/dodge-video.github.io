@@ -103,6 +103,27 @@ const { title, description, kicker } = Astro.props;
     background: transparent;
     padding: 0;
   }
+  .body :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 18px;
+    font-size: 14px;
+  }
+  .body :global(th),
+  .body :global(td) {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line-soft);
+    vertical-align: top;
+  }
+  .body :global(th) {
+    font-weight: 600;
+    color: var(--ink);
+    background: #fafbfc;
+    border-bottom-color: var(--line);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
   @media (max-width: 800px) {
     article {
       padding: 32px 24px;

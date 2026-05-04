@@ -1,0 +1,120 @@
+---
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+// Required Notice: Copyright 2026 Ethan Witwer (https://dodge.video)
+
+import PageLayout from '../../layouts/PageLayout.astro';
+
+const exampleJson = `{
+  "start": {
+    "mpd": "<MPD xmlns='urn:mpeg:dash:schema:mpd:2011' ...>",
+    "base_uri": "https://example.com/segments/"
+  },
+  "streams": [
+    {
+      "label": "video_1000k",
+      "period": 0,
+      "init": [
+        { "range": "0-449" },
+        { "range": "450-704", "buffer": true }
+      ],
+      "data": [
+        { "index": 0, "range": "0-391827" },
+        { "index": 0, "range": "366413-758240" },
+        { "index": 0, "range": "366413-758240", "buffer": true },
+        { "index": 1, "range": "0-391827" },
+        { "index": 5, "range": "0-43999", "padding": true }
+      ]
+    }
+  ]
+}`;
+---
+<PageLayout
+  kicker="SPEC · extended manifests"
+  title="Extended manifest format"
+  description="The extended manifest format reference. Defense designers and tool authors should read this first."
+>
+  <h2>Overview</h2>
+  <p>An <strong>extended manifest</strong> is a JSON file that wraps a standard DASH MPD with a per-stream defense plan. It is the way defenses are expressed in Dodge: a single extended manifest embeds one video's MPD and describes which representations from that MPD are defended, and the specific defense plan for each representation.</p>
+  <p>Defense plans consist of arrays of <strong>cycles</strong>, which are Dodge's generalization of segments. A cycle can be a full or partial segment download. Its contents may be discarded immediately (padding); otherwise, they are stored in an intermediate buffer until a cycle is encountered where a buffer directive is explicitly set.</p>
+  <p>An MPD on its own plays as standard DASH. An MPD plus its extended manifest plays as Dodge-defended DASH. MPDs can be embedded as is, without modification, in extended manifests; the extended manifest simply adds a layer the player consults at fetch time.</p>
+
+  <h2>Basic example</h2>
+  <pre><code>{exampleJson}</code></pre>
+
+  <h2>Top-level fields</h2>
+  <h3><code>start</code></h3>
+  <ul>
+    <li><code>mpd</code> (string, required) — the original MPD XML, embedded as a string. Dynamic (live) MPDs are rejected.</li>
+    <li><code>base_uri</code> (string, required) — the segment server's base URI, used to resolve relative URLs in the MPD.</li>
+  </ul>
+
+  <h3><code>streams[]</code></h3>
+  <p>An array of one or more stream entries. Each entry describes a defense plan for one representation, optionally scoped to a period.</p>
+  <ul>
+    <li><code>label</code> (string, required) — the representation ID this stream defends. Whether it actually corresponds to a representation in the MPD is checked at request time, not at manifest load.</li>
+    <li><code>period</code> (non-negative integer, optional) — scopes the entry to a specific period in multi-period MPDs. When absent, the entry matches any period. Multiple stream entries may share the same <code>label</code> with different <code>period</code> values.</li>
+    <li><code>init[]</code> (array of init cycles, optional)</li>
+    <li><code>data[]</code> (array of data cycles, optional)</li>
+  </ul>
+  <p>At least one of <code>init</code> and <code>data</code> must be non-empty. Either can be omitted entirely (e.g., a stream with only init cycles, such as non-fragmented text tracks; or only data cycles, in the case of self-initializing streams).</p>
+
+  <h2>Cycles</h2>
+  <p>A cycle is one entry in an <code>init</code> or <code>data</code> array. Each cycle is a single download the player will perform; the cycle array as a whole determines the wire shape.</p>
+
+  <h3>Common fields</h3>
+  <ul>
+    <li><code>range</code> (string, optional) — the byte range to fetch, of the form <code>"start-end"</code>. Either bound may be omitted: <code>"-855"</code> means "from the start through byte 855", and <code>"44-"</code> means "from byte 44 to end of resource". When the field is absent entirely, the cycle uses the segment's full extent.</li>
+    <li><code>padding</code> (boolean, optional) — see <a href="#padding">below</a>. Allowed on both init and data cycles.</li>
+    <li><code>buffer</code> (boolean or array, optional) — see <a href="#buffer">below</a>. The array form is allowed only on data cycles.</li>
+    <li><code>quality</code> (string or non-negative integer, optional) — see <a href="#quality">below</a>.</li>
+  </ul>
+
+  <h3>Data cycle-only field</h3>
+  <ul>
+    <li><code>index</code> (non-negative integer, required) — which segment in the representation this cycle downloads.</li>
+  </ul>
+
+  <h2>Cycle directives</h2>
+  <h3 id="buffer"><code>buffer</code></h3>
+  <p>Marks a flush point. The player accumulates cycles in an intermediate buffer and assembles them into playable media at each buffer cycle.</p>
+  <p>Two forms:</p>
+  <ul>
+    <li><code>buffer: true</code> — flush every pending segment downloaded since the last flush.</li>
+    <li><code>buffer: [<em>idx1</em>, <em>idx2</em>, …]</code> — selective flush; only assemble the listed segment indices, leaving any others pending for a later flush. Every index in the array must have already appeared in an earlier cycle, or the manifest is rejected.</li>
+  </ul>
+  <p>The array form lets a defense interleave segments from different playback positions and flush them in groups, instead of in strict download order. It should be used sparingly.</p>
+
+  <h3 id="padding"><code>padding</code></h3>
+  <p>Marks the cycle as padding traffic. The bytes are fetched to shape the wire pattern but discarded immediately and never assembled into playable media.</p>
+
+  <h3 id="quality"><code>quality</code></h3>
+  <p>Fetches the cycle from a different representation in the same adaptation set, useful for concealing the size of a large segment by fetching it at a lower quality. Accepted values:</p>
+  <ul>
+    <li>A string matching the target representation's <code>id</code> (e.g., <code>"quality": "video_500k"</code>).</li>
+    <li>A non-negative integer, interpreted as an index into the adaptation set's representation list.</li>
+  </ul>
+  <p>Numeric strings (e.g., <code>"3"</code>) are kept as strings and treated as representation IDs; a warning is logged at manifest load time to flag the ambiguity. Use a JSON number if an index is intended.</p>
+  <p>On init cycles, <code>quality</code> pre-fetches the alternate representation's init segment so that it can be cached for later use in quality override data cycles. The defense designer must include init cycles with <code>quality</code> for every alternate representation used in data cycles.</p>
+
+  <h2>What's validated at manifest load</h2>
+  <p>The defense registry checks structural correctness only:</p>
+  <ul>
+    <li><code>start.mpd</code> and <code>start.base_uri</code> are present and string-typed; the MPD is not dynamic.</li>
+    <li><code>streams</code> is present; each stream has a string <code>label</code>, a valid <code>period</code> if present, and at least one non-empty cycle array (<code>init</code> or <code>data</code>).</li>
+    <li>Each cycle's <code>range</code> (if present) parses as a well-formed byte range.</li>
+    <li>Each data cycle's <code>index</code> is a non-negative integer.</li>
+    <li><code>buffer</code>, <code>padding</code>, and <code>quality</code> have valid types.</li>
+    <li>Selective <code>buffer</code> arrays only reference segment indices that have appeared earlier in the cycle stream.</li>
+  </ul>
+  <p>What the registry does <em>not</em> check: that <code>label</code> resolves to a real representation in the MPD, that <code>index</code> resolves to a real segment, or that a <code>quality</code> override resolves to an existing representation. Those resolutions happen later, at request time. If a referenced representation or segment is missing, the player <strong>stalls</strong> rather than skipping or falling back — preserving the defense traffic shape.</p>
+
+  <h2>Strict mode</h2>
+  <p>The dash.js module's <code>dodge.strictMode</code> setting controls how aggressively undefended traffic is blocked when a defense is active. The four levels:</p>
+  <ul>
+    <li><code>'representation'</code> (default) — block undefended representations when an extended manifest is active. Plain DASH still works when an MPD is loaded instead of an extended manifest.</li>
+    <li><code>'manifest'</code> — also refuse to play when the source URL is not an extended manifest. A defense must be used to play.</li>
+    <li><code>'max'</code> — also reject extended manifests with thumbnail tracks, non-fragmented text, or XLink references; warn about retries, background UTC sync, and content steering settings that could leak signal outside the defense.</li>
+    <li><code>false</code> — disable enforcement (fall back to vanilla DASH on a per-representation basis; not recommended).</li>
+  </ul>
+  <p>In any mode other than <code>false</code>, embedded MPDs containing DRM, CMCD telemetry, content steering, or DVB reporting trigger informational warnings — these features may not interact safely with traffic analysis defenses and the defense designer should verify their behavior in context. However, we assume that they are unlikely enough to pose a traffic analysis threat that they are not disabled by default; they are important in the streaming ecosystem and must be available to certain content providers.</p>
+</PageLayout>

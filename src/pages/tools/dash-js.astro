@@ -1,0 +1,104 @@
+---
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+// Required Notice: Copyright 2026 Ethan Witwer (https://dodge.video)
+
+import PageLayout from '../../layouts/PageLayout.astro';
+import { SITE } from '../../consts.ts';
+
+const usageHtml = `<script src="dash.all.min.js"></script>
+<script src="dash.dodge.min.js"></script>
+<script>
+  var player = dashjs.MediaPlayer().create();
+  player.initialize(
+    document.querySelector("#videoPlayer"),
+    "content.exmfst.json",
+    true
+  );
+</script>`;
+---
+<PageLayout
+  kicker="TOOL · DASH.JS MODULE"
+  title="Dodge module for dash.js"
+  description="An opt-in module in dash.js that adds the Dodge defense framework. Ship defended catalogs without forking the player or running anything server-side."
+>
+  <h2>What it is</h2>
+  <p>Dodge is implemented as an opt-in module in <a href={SITE.dashjsHome}>dash.js</a> — <code>dash.dodge.js</code>. It is auto-detected at <code>attachView()</code> time, loaded as a separate script, and wired in via overrides registered through <code>mediaPlayer.extend()</code>. Ordinary dash.js playback is unchanged when Dodge is not loaded; when it is, behavior depends on the source URL.</p>
+  <p>The module is purely client-side. No server or network infrastructure changes are required beyond hosting a JSON configuration file (<a href="/spec/extended-manifest">extended manifest</a>) in place of, or alongside, an ordinary MPD. The extended manifest specifies so-called cycles, Dodge's generalized data unit that is downloaded instead of ordinary segments.</p>
+
+  <h2>Operating modes</h2>
+  <table>
+    <thead>
+      <tr><th>Scripts loaded</th><th>Source URL</th><th>Result</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>dash.all.min.js</code> only</td>
+        <td>Plain MPD</td>
+        <td>Standard DASH, completely unchanged</td>
+      </tr>
+      <tr>
+        <td><code>dash.all.min.js</code> + <code>dash.dodge.min.js</code></td>
+        <td>Plain MPD</td>
+        <td>Standard DASH, graceful degradation (configurable via strict mode settings, see below)</td>
+      </tr>
+      <tr>
+        <td><code>dash.all.min.js</code> + <code>dash.dodge.min.js</code></td>
+        <td>Extended manifest</td>
+        <td>Dodge defense active</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>No API changes are needed. Pass an extended manifest URL instead of an MPD URL; everything else flows through the existing <code>MediaPlayer.initialize()</code> interface.</p>
+
+  <h2>Quick start</h2>
+  <pre><code>{usageHtml}</code></pre>
+
+  <h2>Extended manifests</h2>
+  <p>An extended manifest is a JSON file that wraps the original MPD and adds per-representation download schedules. <code>ManifestLoader</code> detects the JSON format, validates it via the <code>DefenseRegistry</code> singleton, and extracts the embedded MPD for <code>DashParser</code> processing. The defense schedules are stored separately and consulted by the <code>DashHandler</code> override during playback.</p>
+  <p>Each stream entry's <code>label</code> matches a representation ID from the MPD, and streams can optionally be scoped to a <code>period</code> index. Cycles in the <code>data</code> array specify a segment <code>index</code>, an optional <code>range</code> for partial downloads, and <code>buffer</code>/<code>padding</code> flags that control when pending data is buffered for playback (nothing is ever buffered unless the defense designer explicitly sets the <code>buffer</code> flag) and whether it is discarded as cover traffic, respectively. Padding can also be downloaded after playable content (trailing padding) to extend a video's apparent duration as seen by network observers.</p>
+  <p>This version of Dodge introduces two features beyond the PoPETS 2026 paper:</p>
+  <ul>
+    <li>The <code>buffer</code> field on data cycles can be an array of segment indices (e.g., <code>"buffer": [0, 1]</code>) for selective buffering: pending data is held until the cycle with the buffer array completes, then all listed indices are buffered together.</li>
+    <li>Both data cycles and init cycles may carry a <code>quality</code> field (a representation ID string or numeric index) to fetch from a different representation in the same adaptation set. On data cycles, this lets defenses conceal a segment's true size by substituting a smaller version from an alternate quality level. On init cycles, it selects which representation's init segment is fetched and stored — downloading multiple init segments per representation is often necessary for playback of alternate representations.</li>
+  </ul>
+  <p>For the full format reference, see <a href="/spec/extended-manifest">extended manifest format</a>.</p>
+
+  <h2>Strict mode</h2>
+  <p>The <code>dodge.strictMode</code> setting prevents accidental undefended playback. The four levels trade safety for flexibility — <code>'representation'</code> is the default and is suitable for many use cases, while <code>'manifest'</code> or <code>'max'</code> is recommended where the presence of a defense is critical. Disabling strict mode entirely is possible but strongly discouraged: representations present in the embedded MPD but not covered in the extended manifest's <code>streams</code> array would be downloaded without any defense.</p>
+  <table>
+    <thead>
+      <tr><th>Level</th><th>Behavior</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>'representation'</code> (default)</td>
+        <td>Blocks undefended fragmented representations when an extended manifest is active; plain DASH still works.</td>
+      </tr>
+      <tr>
+        <td><code>'manifest'</code></td>
+        <td>Same as <code>'representation'</code> and refuses to play if the source URL is not an extended manifest (no vanilla MPDs).</td>
+      </tr>
+      <tr>
+        <td><code>'max'</code></td>
+        <td>Same as <code>'manifest'</code> and also rejects manifests containing thumbnails, non-fragmented text, or XLink references.</td>
+      </tr>
+      <tr>
+        <td><code>false</code></td>
+        <td>Always falls back to vanilla dash.js (not recommended for production).</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>Recognizing their importance in the streaming ecosystem, Dodge does not disable DRM, CMCD, DVB reporting, or content steering. The <code>nor</code>/<code>nrr</code> fields are suppressed in CMCD requests (everything else is preserved); Dodge logs warnings when these features are used in strict mode so the defense designer can verify their behavior in context. Init segment caching should likely not be enabled and is off by default.</p>
+  <p>For the full validation rules, see <a href="/spec/extended-manifest#strict-mode">extended manifest format → strict mode</a>.</p>
+
+  <h2>Tests and quality</h2>
+  <p>The module includes 416 unit tests across 7 files plus a <code>REQUIREMENTS.md</code> traceability index mapping requirements to specific test cases. Existing dash.js tests are completely unaffected: the core hooks are no-op stubs by default with no control flow changes and no new dependencies.</p>
+  <p>Browser-based functional tests use Karma + Mocha + Chai to play real CDN-hosted video through the module in a headless browser and verify end-to-end behavior — defense activation, cycle-by-cycle traffic verification (segment index, byte range, buffer directive, padding flag), trailing phase mock buffer, quality override implementation, strict mode enforcement, multi-period transitions, and seeking during defense.</p>
+
+  <h2>Bundle impact</h2>
+  <p><code>dash.all.min.js</code> grows by +3.1 KiB — the only additions to the base player are the small hooks and stubs needed for override registration. The Dodge module itself lives entirely in <code>dash.dodge.min.js</code> (70.0 KiB), which is loaded only when opted into. Build times are effectively unchanged.</p>
+
+  <h2>Source</h2>
+  <p>The module's source lives in the <a href={SITE.dashjsRepo}>dash.js repository</a> (<code>src/dodge/</code>), licensed under <strong>BSD-3-Clause</strong> by the DASH Industry Forum, the same license as the rest of dash.js. Integration is currently being reviewed in <a href={`${SITE.dashjsRepo}/pull/5021`}>pull request #5021</a>; once merged, the module ships with the regular dash.js distribution.</p>
+  <p>For discussion related to the dash.js module's development, we refer to the <a href={SITE.dashjsGroup}>dash.js Google Group</a>.</p>
+</PageLayout>
