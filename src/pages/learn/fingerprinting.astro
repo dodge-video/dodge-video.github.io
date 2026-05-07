@@ -10,13 +10,13 @@ import PageLayout from '../../layouts/PageLayout.astro';
   description="A deeper look at why encrypted video traffic still leaks what you're watching."
 >
   <h2>The shape of a video</h2>
-  <p>Modern video streaming uses <a href="https://en.wikipedia.org/wiki/Dynamic_Adaptive_Streaming_over_HTTP" target="_blank" rel="noopener noreferrer">DASH</a> (Dynamic Adaptive Streaming over HTTP). Videos are split into many short <em>segments</em>, each a few seconds long, and your browser fetches them one at a time as you watch.</p>
+  <p>Modern video streaming uses <a href="https://en.wikipedia.org/wiki/Dynamic_Adaptive_Streaming_over_HTTP" target="_blank" rel="noopener noreferrer">DASH</a> (Dynamic Adaptive Streaming over HTTP). Videos are encoded at several quality levels — 1080p, 720p, 480p, and so on — which are called <em>representations</em>. Each representation is split into many short <em>segments</em>, each a few seconds long, and your browser fetches them one at a time as you watch, sometimes switching quality mid-playback when your network slows down.</p>
   <p>Two facts about those segments make fingerprinting possible:</p>
   <ul>
     <li>Every segment in a given representation has the same <em>duration</em>.</li>
-    <li>Their <em>sizes</em> vary and are correlated with context complexity.</li>
+    <li>Their <em>sizes</em> vary and are correlated with content complexity.</li>
   </ul>
-  <p>At a high level, then, the byte counts that are sent over the network are essentially a time series of the video's visual complexity. Different videos have different complexity profiles, and that's enough to tell them apart.</p>
+  <p>At a high level, the byte counts sent over the network are essentially a time series (temporal sequence) of the video's visual complexity. Different videos have different complexity profiles, and that's enough to tell them apart. The attack is called <em>video fingerprinting</em>, and it falls within the broader field of <em>traffic analysis</em>.</p>
 
   <h2>Why encryption doesn't fix this</h2>
   <p>HTTPS encrypts the bytes inside each segment — the actual video data — but it does not hide the size of the encrypted data. An observer can still see "the browser fetched a 412 KB segment, then a 380 KB segment, then a 95 KB segment...". The pattern of sizes is the fingerprint, and the bytes themselves don't need to be readable.</p>
