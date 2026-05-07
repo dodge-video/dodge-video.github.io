@@ -8,7 +8,7 @@ import MetaStrip from './MetaStrip.astro';
   <div class="tag mono">// open-source video fingerprinting defense</div>
   <h1>Encrypted video traffic still leaks <span class="accent">what you're watching</span>.</h1>
   <p class="lead">
-    Dodge reshapes the chunk-by-chunk download pattern of streaming video so that observers — coffee shop neighbors, network admins, ISPs — can't see an identifying fingerprint. To give you a high-quality, private viewing experience.
+    <strong>Dodge is a plugin for in-browser video players that gives you a seamless, private viewing experience.</strong> It reshapes the chunk-by-chunk download pattern of streaming video so that prying eyes — coffee shop neighbors, network admins, ISPs — can't see an identifying fingerprint.
   </p>
   <MetaStrip />
 </header>
@@ -49,6 +49,10 @@ import MetaStrip from './MetaStrip.astro';
     color: var(--muted);
     margin: 0;
     max-width: 64ch;
+  }
+  .lead strong {
+    color: var(--ink);
+    font-weight: 600;
   }
   @media (max-width: 800px) {
     .headline {

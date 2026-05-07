@@ -21,6 +21,8 @@ const usageHtml = `<script src="dash.all.min.js"></script>
   title="Dodge module for dash.js"
   description="An opt-in module in dash.js that adds the Dodge defense framework. Ship defended catalogs without forking the player or running anything server-side."
 >
+  <p class="audience-note"><strong>Audience:</strong> content providers and developers integrating Dodge into a dash.js-based player. Familiarity with DASH and dash.js is assumed. If you're a viewer looking to apply defenses, see the <a href="/tools/extension">browser extension</a> instead.</p>
+
   <h2>What it is</h2>
   <p>Dodge is implemented as an opt-in module in <a href={SITE.dashjsHome} target="_blank" rel="noopener noreferrer">dash.js</a> — <code>dash.dodge.js</code>. It is auto-detected at <code>attachView()</code> time, loaded as a separate script, and wired in via overrides registered through <code>mediaPlayer.extend()</code>. Ordinary dash.js playback is unchanged when Dodge is not loaded; when it is, behavior depends on the source URL.</p>
   <p>The module is purely client-side. No server or network infrastructure changes are required beyond hosting a JSON configuration file (<a href="/spec/extended-manifest">extended manifest</a>) in place of, or alongside, an ordinary MPD. The extended manifest specifies so-called cycles, Dodge's generalized data unit that is downloaded instead of ordinary segments.</p>
@@ -102,3 +104,15 @@ const usageHtml = `<script src="dash.all.min.js"></script>
   <p>The module's source lives in the <a href={SITE.dashjsRepo} target="_blank" rel="noopener noreferrer">dash.js repository</a> (<code>src/dodge/</code>), licensed under <strong>BSD-3-Clause</strong> by the DASH Industry Forum, the same license as the rest of dash.js. Integration is currently being reviewed in <a href={`${SITE.dashjsRepo}/pull/5021`} target="_blank" rel="noopener noreferrer">pull request #5021</a>; once merged, the module ships with the regular dash.js distribution.</p>
   <p>For discussion related to the dash.js module's development, we refer to the <a href={SITE.dashjsGroup} target="_blank" rel="noopener noreferrer">dash.js Google Group</a>.</p>
 </PageLayout>
+
+<style is:global>
+  .audience-note {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-soft);
+    padding: 12px 16px !important;
+    margin: 0 0 24px !important;
+    font-size: 14px;
+    color: var(--ink);
+    border-radius: 0 6px 6px 0;
+  }
+</style>
