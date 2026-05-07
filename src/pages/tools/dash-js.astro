@@ -21,7 +21,7 @@ const usageHtml = `<script src="dash.all.min.js"></script>
   title="Dodge module for dash.js"
   description="An opt-in module in dash.js that adds the Dodge defense framework. Ship defended catalogs without forking the player or running anything server-side."
 >
-  <p class="audience-note"><strong>Audience:</strong> content providers and developers integrating Dodge into a dash.js-based player. Familiarity with DASH and dash.js is assumed. If you're a viewer looking to apply defenses, see the <a href="/tools/extension">browser extension</a> instead.</p>
+  <p class="audience-note"><strong>Intended audience:</strong> content providers and developers integrating Dodge into a dash.js-based player. Familiarity with DASH and dash.js is assumed. If you're a viewer looking to apply defenses, see the <a href="/tools/extension">browser extension</a> instead.</p>
 
   <h2>What it is</h2>
   <p>Dodge is implemented as an opt-in module in <a href={SITE.dashjsHome} target="_blank" rel="noopener noreferrer">dash.js</a> — <code>dash.dodge.js</code>. It is auto-detected at <code>attachView()</code> time, loaded as a separate script, and wired in via overrides registered through <code>mediaPlayer.extend()</code>. Ordinary dash.js playback is unchanged when Dodge is not loaded; when it is, behavior depends on the source URL.</p>
