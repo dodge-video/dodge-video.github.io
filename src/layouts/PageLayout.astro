@@ -132,4 +132,11 @@ const { title, description, kicker } = Astro.props;
       font-size: 28px;
     }
   }
+  @media (max-width: 700px) {
+    .body :global(table) {
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
 </style>
