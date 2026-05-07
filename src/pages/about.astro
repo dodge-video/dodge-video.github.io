@@ -13,7 +13,7 @@ import { SITE } from '../consts.ts';
   <h2>The research</h2>
   <p>Dodge has its origins in <em>"{SITE.paperTitle}"</em>, presented at <strong>{SITE.paperVenue} {SITE.paperYear}</strong>. The paper introduces a client-side framework (fork of dash.js) for designing application-layer video fingerprinting defenses and describes a proof-of-concept defense used to test the system.</p>
   <p>The name is a play on words. Dodge is implemented as a dash.js module, and the most prominent streaming standard today — and the one we target — is DASH. So, to play videos undefended is to "dash"; to thwart video fingerprinting is to "dodge".
-  <p>Read the paper: <a href={SITE.paperUrl}>{SITE.paperVenue} {SITE.paperYear} (open access PDF)</a>.</p>
+  <p>Read the paper: <a href={SITE.paperUrl} target="_blank" rel="noopener noreferrer">{SITE.paperVenue} {SITE.paperYear} (open access PDF)</a>.</p>
 
   <h2>The Dodge toolkit</h2>
   <p>Right now, we provide three tools to support defense development and usage:</p>
@@ -30,5 +30,5 @@ import { SITE } from '../consts.ts';
   <p>If you're a content provider thinking about deployment, keep in mind that there are a number of things you need consider carefully. Please <a href="/contribute">reach out before going live</a>. We'd rather help you ship something safe than read about a leak after the fact.</p>
 
   <h2>Discussion and contact</h2>
-  <p>We refer to the <a href={SITE.dashjsGroup}>dash.js Google Group</a> for community discussion of things related to the dash.js module and its development in particular. <a href="/contribute">Other ways to get involved →</a></p>
+  <p>We refer to the <a href={SITE.dashjsGroup} target="_blank" rel="noopener noreferrer">dash.js Google Group</a> for community discussion of things related to the dash.js module and its development in particular. <a href="/contribute">Other ways to get involved →</a></p>
 </PageLayout>
